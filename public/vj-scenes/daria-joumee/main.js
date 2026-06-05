@@ -565,10 +565,22 @@ console.log(
 		this.createTimeline()
 
 		addEventListener('resize', () => {
-			if (!this.camera || !this.composer) return
-			this.camera.aspect = innerWidth / innerHeight
+			if (!this.camera || !this.renderer || !this.composer) return
+
+			const width = window.innerWidth
+			const height = window.innerHeight
+
+			this.camera.aspect = width / height
 			this.camera.updateProjectionMatrix()
-			this.composer.setSize(innerWidth, innerHeight)
+
+			this.renderer.setSize(width, height)
+			this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+			this.composer.setSize(width, height)
+
+			if (this.bloomPass) {
+				this.bloomPass.setSize(width, height)
+			}
 		})
 	}
 
