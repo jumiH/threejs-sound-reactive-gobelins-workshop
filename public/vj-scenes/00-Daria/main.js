@@ -215,7 +215,7 @@ console.log(
 			new THREE.Fog(
 				'#020403',
 				7,
-				20
+				22
 			)
 
 		//--------------------------------------------
@@ -479,8 +479,8 @@ console.log(
 				obj.material = this.glassMaterials.air
 			}
 
-			obj.castShadow = true
-			obj.receiveShadow = true
+			obj.castShadow = false
+			obj.receiveShadow = false
 		})
 
 		this.scene.add(this.glassModel, this.wallsModel)
@@ -491,20 +491,20 @@ console.log(
 		//
 		//--------------------------------------------
 
-		const key = new THREE.DirectionalLight(0xffffff, 0)
+		const key = new THREE.DirectionalLight(0xffffff, 0.04)
 		key.position.set(0, 2, 0)
 		this.key = key
 
 		this.scene.add(key)
 
 		const point = new THREE.PointLight(0xffffff, 0.2, 25, 0.5)
-		point.position.set(0, 0, 7)
+		point.position.set(0, 0.5, 7)
 		this.point = point
 
 		this.scene.add(point)
 
-		this.red = new THREE.PointLight(0xd42b34, 0, 0)
-		this.red.position.set(0, 1, -2)
+		this.red = new THREE.PointLight(0xd14917, 0, 7)
+		this.red.position.set(0, 3.2, -3)
 
 		// this.scene.add(
 		// new THREE.PointLightHelper(
@@ -515,8 +515,8 @@ console.log(
 
 		this.scene.add(this.red)
 
-		this.blue = new THREE.PointLight(0x2e5ac2, 0, 0)
-		this.blue.position.set(-3, 1, -2)
+		this.blue = new THREE.PointLight(0x2e5ac2, 0, 7)
+		this.blue.position.set(-3, 3.2, -3)
 
 		// this.scene.add(
 		// new THREE.PointLightHelper(
@@ -527,8 +527,8 @@ console.log(
 
 		this.scene.add(this.blue)
 
-		this.green = new THREE.PointLight(0x1e7a32, 0, 0)
-		this.green.position.set(3, 1, -2)
+		this.green = new THREE.PointLight(0x1e7a32, 0, 7)
+		this.green.position.set(3, 3.2, -3)
 
 		// this.scene.add(
 		// new THREE.PointLightHelper(
@@ -687,7 +687,7 @@ console.log(
 					palette: [
 						'#438e56',
 						'#436309',
-						'#10992d',
+						'#a0672b',
 					],
 				})
 			)
@@ -736,7 +736,7 @@ console.log(
 				a.volumeSmooth, 0.5, 1.0
 			)
 
-		const intensity = volume * 100
+		const intensity = 10 + volume * 30.2
 
 		this.red.intensity = intensity * this.musicLightPower
 		this.blue.intensity = intensity * this.musicLightPower
@@ -781,7 +781,7 @@ console.log(
 		tl.to(
 			this.point,
 			{
-				intensity: 1.1,
+				intensity: 2.1,
 				duration: 5,
 				ease: 'sine.inOut',
 			},
@@ -799,12 +799,13 @@ console.log(
 				x: -7,
 				y: 3.2,
 				z: 5,
-				duration: 2.5,
+				duration: 2,
 				ease: 'sine.inOut',
 			},
 			'1'
 		)
 
+		
 		Object.values(this.glassMaterials).forEach((material, index) => {
 			tl.to(
 				material.uniforms.uIntroPower,
@@ -829,6 +830,15 @@ console.log(
 			)
 		})
 
+		tl.to(
+			this,
+			{
+				musicLightPower: 1,
+			},
+			'>'
+		)
+
+
 		//-------------------------------
 		// 2. Moving camera to the right to be ready for the flyby
 		//-------------------------------
@@ -842,7 +852,7 @@ console.log(
 				duration: 1.5,
 				ease: 'power2.inOut',
 			},
-			'+=2.5'
+			'+=1'
 		)
 
 
@@ -859,7 +869,7 @@ console.log(
 				duration: 3,
 				ease: 'power2.inOut',
 			},
-			'+=4'
+			'+=2'
 		)
 
 		tl.to(
@@ -886,7 +896,7 @@ console.log(
 		tl.to(
 			roll,
 			{
-				value: Math.PI * 4,
+				value: Math.PI * 6,
 				ease: 'power2.inOut',
 				duration: 2.5,
 
